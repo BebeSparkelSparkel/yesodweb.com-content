@@ -174,15 +174,15 @@ instance Yesod Slash where
         go x = Just $ TE.encodeUtf8 x
         pieces = pieces' ++ [""]
 
-    -- We want to keep canonical URLs. Therefore, if the URL is missing a
-    -- trailing slash, redirect. But the empty set of pieces always stays the
-    -- same.
+    -- We want to keep canonical URLs. Therefore, if the URL is missing
+    -- a trailing slash, redirect. But the empty set of pieces always
+    -- stays the same.
     cleanPath _ [] = Right []
     cleanPath _ s
-        | dropWhile (not . T.null) s == [""] = -- the only empty string is the last one
-            Right $ init s
-        -- Since joinPath will append the missing trailing slash, we simply
-        -- remove empty pieces.
+        -- the only empty string is the last one
+        | dropWhile (not . T.null) s == [""] = Right $ init s
+        -- Since joinPath will append the missing trailing slash,
+        -- we simply remove empty pieces.
         | otherwise = Left $ filter (not . T.null) s
 
 getRootR :: Handler Html
@@ -274,7 +274,8 @@ mkYesod "App" [parseRoutes|
 
 instance Yesod App where
     defaultLayout contents = do
-        PageContent title headTags bodyTags <- widgetToPageContent contents
+        PageContent title headTags bodyTags <-
+            widgetToPageContent contents
         mmsg <- getMessage
         withUrlRenderer [hamlet|
             $doctype 5
@@ -442,7 +443,8 @@ urlParamRenderOverride :: site
                        -> [(T.Text, T.Text)] -- ^ query string
                        -> Maybe Builder
 urlParamRenderOverride y (StaticR s) _ =
-    Just $ uncurry (joinPath y (Settings.staticRoot $ settings y)) $ renderRoute s
+    Just $ uncurry (joinPath y (Settings.staticRoot $ settings y)) $
+           renderRoute s
 urlParamRenderOverride _ _ _ = Nothing
 ----
 
