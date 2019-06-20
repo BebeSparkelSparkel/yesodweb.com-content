@@ -52,8 +52,8 @@ instance Yesod App
 instance RenderMessage App FormMessage where
     renderMessage _ _ = defaultFormMessage
 
--- And tell us where to find the jQuery libraries. We'll just use the defaults,
--- which point to the Google CDN.
+-- And tell us where to find the jQuery libraries. We'll just use the
+-- defaults, which point to the Google CDN.
 instance YesodJquery App
 
 -- The datatype we wish to receive from the form
@@ -66,23 +66,23 @@ data Person = Person
     }
   deriving Show
 
--- Declare the form. The type signature is a bit intimidating, but here's the
--- overview:
+-- Declare the form. The type signature is a bit intimidating,
+-- but here's the overview:
 --
--- * The Html parameter is used for encoding some extra information. See the
--- discussion regarding runFormGet and runFormPost below for further
--- explanation.
+-- * The Html parameter is used for encoding some extra information.
+-- See the discussion regarding runFormGet and runFormPost below for
+-- further explanation.
 --
--- * We have our Handler as the inner monad, which indicates which site this is
--- running in.
+-- * We have our Handler as the inner monad, which indicates which
+-- site this is running in.
 --
 -- * FormResult can be in three states: FormMissing (no data available),
 -- FormFailure (invalid data) and FormSuccess
 --
 -- * The Widget is the viewable form to place into the web page.
 --
--- Note that the scaffolded site provides a convenient Form type synonym,
--- so that our signature could be written as:
+-- Note that the scaffolded site provides a convenient Form type
+-- synonym, so that our signature could be written as:
 --
 -- > personForm :: Form Person
 --
@@ -114,8 +114,9 @@ getHomeR = do
                 <button>Submit
         |]
 
--- The POST handler processes the form. If it is successful, it displays the
--- parsed person. Otherwise, it displays the form again with error messages.
+-- The POST handler processes the form. If it is successful,
+-- it displays the parsed person. Otherwise, it displays the form
+-- again with error messages.
 postPersonR :: Handler Html
 postPersonR = do
     ((result, widget), enctype) <- runFormPost personForm
